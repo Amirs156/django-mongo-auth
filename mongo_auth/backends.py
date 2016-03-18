@@ -5,13 +5,13 @@ from django.core import exceptions
 from django.utils import crypto, importlib
 
 from mongoengine import queryset
-from mongoengine.django import auth
 
 import tweepy
 
 from django_browserid import auth as browserid_auth, base as browserid_base
 
 from . import models
+from .mongoengine_django_auth import MongoEngineBackend
 
 LAZYUSER_USERNAME_TEMPLATE = 'guest-%s'
 USER_CLASS = 'mongo_auth.models.User'
@@ -34,7 +34,7 @@ def get_class(path):
 
 User = get_class(getattr(settings, 'USER_CLASS', USER_CLASS))
 
-class MongoEngineBackend(auth.MongoEngineBackend):
+class MongoEngineBackend(MongoEngineBackend):
     # TODO: Implement object permission support
     supports_object_permissions = False
     # TODO: Implement anonymous user backend

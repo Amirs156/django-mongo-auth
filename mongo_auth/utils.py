@@ -20,3 +20,10 @@ def valid_token(user):
 
     data = json.load(urllib.urlopen(graph_api_url('me', user, token=True)))
     return 'error' not in data
+
+try:
+    # django >= 1.4
+    from django.utils.timezone import now as datetime_now
+except ImportError:
+    from datetime import datetime
+    datetime_now = datetime.now

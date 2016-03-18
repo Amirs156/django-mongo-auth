@@ -9,9 +9,9 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 import mongoengine
-from mongoengine.django import auth
 
 from . import utils
+from .mongoengine_django_auth import User as MongoengineDjangoAuthUser
 
 USERNAME_REGEX = r'[\w.@+-]+'
 CONFIRMATION_TOKEN_VALIDITY = 5 # days
@@ -39,7 +39,7 @@ class TwitterAccessToken(mongoengine.EmbeddedDocument):
     key = mongoengine.StringField(max_length=150)
     secret = mongoengine.StringField(max_length=150)
 
-class User(auth.User):
+class User(MongoengineDjangoAuthUser):
     username = mongoengine.StringField(
         max_length=30,
         min_length=4,
